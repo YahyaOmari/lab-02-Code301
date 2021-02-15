@@ -9,7 +9,7 @@ Actual time needed to complete: 3:54
 
 
 Number and name of feature: Feature #2: Display images
-Estimate of time needed to complete: 40 minutes
-Start time: 2:50
-Finish time: 3:30
+Estimate of time needed to complete: 60 minutes
+Start time: 4:00
+Finish time: 5:00
 Actual time needed to complete: 3:54
