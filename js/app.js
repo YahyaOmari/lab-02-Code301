@@ -29,18 +29,19 @@ function display() {
         data.forEach(element => {
             let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
             jsAlbum.renderAlbum();
-            
+
         });
         filtering();
+        showKeywords();
     });
 }
 
 $('document').ready(display);
 
 console.log(keywords);
-
+var uniqueNames = [];
 function filtering() {
-    var uniqueNames = [];
+
     $.each(keywords, function (i, el) {
         if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
     });
@@ -49,7 +50,39 @@ function filtering() {
 }
 
 function showKeywords() {
+    let showing = $('.showKeywords').clone();
+    showing.removeClass('showKeywords');
 
-    $("option").append("select")
-    
+    for (let index = 0; index < uniqueNames.length; index++) {
+        let keyValue = uniqueNames[index];
+        $("select").append(`<option>${keyValue}</option>`);
+
+        // showing.find('option').text(uniqueNames[index]);
+
+    }
+
+    let showHide = (event) => {
+        $('.sec').hide();
+        let img = $(`img[value="${event.target.value}"]`).parent();
+        $(img).show();
+    };
+    $('.showKeywords').on('change', showHide);
+
 }
+
+// $('select').on('change', function () {
+//     $(this).siblings('option').toggleClass('on');
+
+// });
+
+// $('option').on('click','select',function () {
+//     $(this).fadeOut(400);
+// });
+
+// $('select').on('change', (event) => {
+//     let showHide = event.target.value;
+//     $('section').hide();
+//     $(`section[class="${showHide}"`).fadeIn();
+// });
+
+
