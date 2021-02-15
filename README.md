@@ -1,1 +1,15 @@
 # lab-02-Code301
+ 
+Number and name of feature: Feature #1: Display images
+Estimate of time needed to complete: 40 minutes
+Start time: 2:50
+Finish time: 3:30
+Actual time needed to complete: 3:54
+
+
+
+Number and name of feature: Feature #2: Display images
+Estimate of time needed to complete: 40 minutes
+Start time: 2:50
+Finish time: 3:30
+Actual time needed to complete: 3:54
