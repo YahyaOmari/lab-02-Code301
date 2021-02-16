@@ -1,6 +1,7 @@
 'use strict';
 
 var keywords = [];
+var id = $('#temp');
 
 function Album(image, title, description, keyword, horns) {
     this.image = image;
@@ -13,15 +14,29 @@ function Album(image, title, description, keyword, horns) {
 
 
 Album.prototype.renderAlbum = function () {
-    let sectionAlbum = $('.sec').clone();
-    sectionAlbum.find('img').attr('src', this.image);
-    sectionAlbum.find('h2').text(this.title);
-    sectionAlbum.find('p').text(this.description);
-    sectionAlbum.removeClass('sec');
-    sectionAlbum.toggleClass(this.keyword);
+    // let sectionAlbum = $('.sec').clone();
+    // sectionAlbum.find('img').attr('src', this.image);
+    // sectionAlbum.find('h2').text(this.title);
+    // sectionAlbum.find('p').text(this.description);
+    // sectionAlbum.removeClass('sec');
+    // sectionAlbum.toggleClass(this.keyword);
 
-    $('main').append(sectionAlbum);
+    // $('main').append(sectionAlbum);
+    let template = $(id).html();
+    $("#mainTemp").append(Mustache.render(template,this));
+
 };
+
+// Album.prototype.renderAlbum = function () {
+//     let template = $(letID).html();
+//     // console.log(template)
+//     // $('.sec').append(Mustache.render(template, this));
+    
+//     let render = Mustache.render(template,this);
+    
+//     return render;
+//     console.log('test')
+// };
 
 function display() {
     const ajaxSettings = {
@@ -29,13 +44,13 @@ function display() {
         dataType: 'json'
     };
     $('main').empty();
-    $('.showKeywords').empty();
+    $('#showKeywords').empty();
     $.ajax('../data/page-1.json', ajaxSettings).then(data => {
         data.forEach(element => {
             let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
             jsAlbum.renderAlbum();
-
         });
+        uniqueNames = [];
         filtering();
         showKeywords();
     });
@@ -43,23 +58,24 @@ function display() {
 
 $('document').ready(display);
 
-console.log(keywords);
 var uniqueNames = [];
 function filtering() {
 
     $.each(keywords, function (i, el) {
         if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+
     });
-    console.log(uniqueNames);
 }
 
 function showKeywords() {
-    let showing = $('.showKeywords').clone();
-    showing.removeClass('showKeywords');
-
+    // let showing = $('#showKeywords').clone();
+    // showing.removeAttr('showKeywords');
+    $('#showKeywords').on('change',function(){
+        $('#mainTemp').children().not(':first-child').remove();
+    });
     for (let index = 0; index < uniqueNames.length; index++) {
         let keyValue = uniqueNames[index];
-        $("select").append(`<option>${keyValue}</option>`);
+        $('#showKeywords').append(`<option>${keyValue}</option>`);
     }
 
 }
@@ -70,17 +86,20 @@ let showHide = (event) => {
     $(`.${selectKeyWord}`).fadeIn();
 
 };
-$('.showKeywords').on('change', showHide);
+$('#showKeywords').on('change', showHide);
 $('select').on('change',showHide);
 
 function showAlbumTwo() {
+
     const ajaxSettings = {
         method: 'get',
         dataType: 'json'
     };
 
+    
     $('main').empty();
-    console.log($('main'));
+    
+
     $.ajax('../data/page-2.json', ajaxSettings).then(data => {
         data.forEach(element => {
             let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
@@ -96,4 +115,4 @@ function showAlbumTwo() {
 // };
 
 $('#secP').on('click', showAlbumTwo);
-$('#firstP').on('click', display)
+$('#firstP').on('click', display);
