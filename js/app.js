@@ -11,6 +11,7 @@ function Album(image, title, description, keyword, horns) {
     keywords.push(this.keyword);
 }
 
+
 Album.prototype.renderAlbum = function () {
     let sectionAlbum = $('.sec').clone();
     sectionAlbum.find('img').attr('src', this.image);
@@ -68,8 +69,28 @@ let showHide = (event) => {
 
 };
 $('.showKeywords').on('change', showHide);
-
 $('select').on('change',showHide);
 
+function showAlbumTwo() {
+    keywords = [];
+    const ajaxSettings = {
+        method: 'get',
+        dataType: 'json'
+    };
+    $.ajax('../data/page-2.json', ajaxSettings).then(data => {
+        data.forEach(element => {
+            let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
+            jsAlbum.renderAlbum();
+        });
+        clearAndRender();
+    });
+}
 
+let clearAndRender = (event) => {
+    $('.sec').hide();
+    let selectImages = event.target.id;
+    $('.secP').hide();
+    $(`.${selectImages}`).fadeIn();
+};
 
+$('.showKeywords').on('change', showAlbumTwo);
