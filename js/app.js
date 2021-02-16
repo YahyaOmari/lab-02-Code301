@@ -28,7 +28,7 @@ function display() {
         method: 'get',
         dataType: 'json'
     };
-    $.ajax('../data/page-1.json', ajaxSettings).then(data => {
+    $.ajax('data/page-1.json', ajaxSettings).then(data => {
         data.forEach(element => {
             let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
             jsAlbum.renderAlbum();
