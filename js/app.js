@@ -28,7 +28,9 @@ function display() {
         method: 'get',
         dataType: 'json'
     };
-    $.ajax('data/page-1.json', ajaxSettings).then(data => {
+    $('main').empty();
+    $('.showKeywords').empty();
+    $.ajax('../data/page-1.json', ajaxSettings).then(data => {
         data.forEach(element => {
             let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
             jsAlbum.renderAlbum();
@@ -72,25 +74,26 @@ $('.showKeywords').on('change', showHide);
 $('select').on('change',showHide);
 
 function showAlbumTwo() {
-    keywords = [];
     const ajaxSettings = {
         method: 'get',
         dataType: 'json'
     };
+
+    $('main').empty();
+    console.log($('main'));
     $.ajax('../data/page-2.json', ajaxSettings).then(data => {
         data.forEach(element => {
             let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
             jsAlbum.renderAlbum();
         });
-        clearAndRender();
     });
 }
 
-let clearAndRender = (event) => {
-    $('.sec').hide();
-    let selectImages = event.target.id;
-    $('.secP').hide();
-    $(`.${selectImages}`).fadeIn();
-};
+// let clearAndRender = (event) => {
+//     $('.sec').hide();
+//     let selectImages = event.target.id;
+//     $('.secP').hide();
+// };
 
-$('.showKeywords').on('change', showAlbumTwo);
+$('#secP').on('click', showAlbumTwo);
+$('#firstP').on('click', display)
