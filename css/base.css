@@ -4,8 +4,14 @@ select {
      /* visibility:hidden;  */
     } 
 
-    select.on 
-    { 
-        background: blueviolet; color: 
-        #fff; visibility:visible;
-     } 
+    body {
+        background-color: coral;
+    }
+
+    section img {
+        width: 100px;
+        height: 100px;
+    }
+    section:first-child{
+        display: none;
+    }
