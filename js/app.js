@@ -2,6 +2,7 @@
 
 var keywords = [];
 var id = $('#temp');
+var renderArr = []; 
 
 function Album(image, title, description, keyword, horns) {
     this.image = image;
@@ -10,6 +11,7 @@ function Album(image, title, description, keyword, horns) {
     this.keyword = keyword;
     this.horns = horns;
     keywords.push(this.keyword);
+    renderArr.push(this)
 }
 
 
@@ -23,6 +25,7 @@ Album.prototype.renderAlbum = function () {
 
     // $('main').append(sectionAlbum);
     let template = $(id).html();
+    
     $("#mainTemp").append(Mustache.render(template,this));
 
 };
@@ -79,11 +82,20 @@ function showKeywords() {
     }
 
 }
+
 let showHide = (event) => {
-    $('section').hide();
+    $('#mainTemp').empty();
     let selectKeyWord = event.target.value;
-    $('section').hide();
-    $(`.${selectKeyWord}`).fadeIn();
+    // $('section').hide();
+    renderArr.forEach(v=>{
+        if (v.keyword == selectKeyWord){
+            v.renderAlbum()
+            console.log(v.keyword);
+        }
+    })
+    // $(`.${selectKeyWord}`).fadeIn();
+    // selectKeyWord.renderAlbum
+    // console.log(selectKeyWord);
 
 };
 $('#showKeywords').on('change', showHide);
