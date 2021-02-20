@@ -1,0 +1,61 @@
+@import 'reset.css';
+@import 'modules.css';
+select {
+     /* visibility:hidden;  */
+    } 
+
+body {
+    background-color: coral;
+}
+.sec{ 
+    visibility:hidden;
+} 
+
+section img {
+    width: 250px;
+    height: 250px;
+    padding: 30px;
+    margin: auto;
+    border: 20px;
+}
+
+main 
+{
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%
+}
+h2{
+    margin: auto;
+    width: 328px;
+    font-size: 25px;
+    padding: 15px;
+    text-align-last: center;
+}
+h1 {
+    text-align: center;
+    padding: 50px;
+    font-size: 40px;
+    font-weight: bold;
+}
+div{
+    
+    text-align: center;
+    padding: 10px;
+    border: 10px whitesmoke solid;
+    background-color: gray;
+    width: 500px;
+    position: relative;
+    left: 35%;
+
+}
+select{
+    margin-bottom: 2px;
+}
+button, select{
+    text-align: center;
+    border: none;
+}
+main { 
+    margin: 10px;
+    padding: 10px;
+}
