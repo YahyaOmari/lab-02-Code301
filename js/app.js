@@ -5,6 +5,7 @@ var id = $('#temp');
 var renderArr = [];
 var titleArr = [];
 var hornsArr = [];
+var pushArr = true;
 
 function Album(image, title, description, keyword, horns) {
     this.image = image;
@@ -12,18 +13,18 @@ function Album(image, title, description, keyword, horns) {
     this.description = description;
     this.keyword = keyword;
     this.horns = horns;
-    keywords.push(this.keyword);
-    renderArr.push(this);
-    titleArr.push(this.title);
-    hornsArr.push(this.horns);
+    if(pushArr){
+        keywords.push(this.keyword);
+        renderArr.push(this);
+        titleArr.push(this.title);
+        hornsArr.push(this.horns);
+    }
     sortHorns(hornsArr);
     sortTitle(titleArr);
 }
 
-
 Album.prototype.renderAlbum = function() {
     let template = $(id).html();
-
     $("#mainTemp").append(Mustache.render(template, this));
 };
 
@@ -36,11 +37,14 @@ function display() {
     $('#showKeywords').empty();
     $.ajax('./data/page-1.json', ajaxSettings).then(data => {
         data.forEach(element => {
-            let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
+            pushArr = true;
+            let jsAlbum = new Album(element.image_url, element.title, element.
+	    description, element.keyword, element.horns);
             jsAlbum.renderAlbum();
         });
-        filtering();
+        // filtering();
         showKeywords();
+        console.log(renderArr);
     });
 }
 
@@ -57,9 +61,9 @@ function filtering() {
 }
 
 function showKeywords() {
-    $('#showKeywords').on('change', function() {
-        $('#mainTemp').children().not(':first-child').remove();
-    });
+    // $('#showKeywords').on('change', function() {
+    //     $('#mainTemp').children().not(':first-child').remove();
+    // });
     for (let index = 0; index < uniqueNames.length; index++) {
         let keyValue = uniqueNames[index];
         $('#showKeywords').append(`<option>${keyValue}</option>`);
@@ -77,7 +81,7 @@ let showHide = (event) => {
     })
 };
 
-$('#showKeywords').on('change', showHide);
+// $('#showKeywords').on('change', showHide);
 $('select').on('change', showHide);
 
 function showAlbumTwo() {
@@ -89,7 +93,9 @@ function showAlbumTwo() {
     $('main').empty();
     $.ajax('./data/page-2.json', ajaxSettings).then(data => {
         data.forEach(element => {
-            let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
+            pushArr = true;
+            let jsAlbum = new Album(element.image_url, element.title, element.
+	    description, element.keyword, element.horns);
             jsAlbum.renderAlbum();
         });
         filtering();
@@ -106,7 +112,6 @@ function sortHorns(data) {
     });
     // console.log(data);
 };
-
 
 function sortTitle(data) {
     data.sort((a, b) => {
@@ -130,6 +135,7 @@ function showHorns() {
             data1 = data;
             allData = data1.concat(data2);
             sortHorns(allData);
+            pushArr = false;
             allData.forEach(element => {
                 let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
                 jsAlbum.renderAlbum();
@@ -157,6 +163,7 @@ function showTitle() {
             data1 = data;
             allData = data1.concat(data2);
             sortTitle(allData);
+            pushArr = false;
             allData.forEach(element => {
                 let jsAlbum = new Album(element.image_url, element.title, element.description, element.keyword, element.horns);
                 jsAlbum.renderAlbum();
@@ -165,8 +172,6 @@ function showTitle() {
             showKeywords();
         });
     });
-    
-
 }
 
 $('#horns').on('click', showHorns);
